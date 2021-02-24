@@ -1,5 +1,5 @@
 # Restful-web-services
-
+[Notes](https://github.com/arreese/restful-web-services/notes.md)
 ## Adding HATEOAS as a dependecy
 ```
 <dependency>

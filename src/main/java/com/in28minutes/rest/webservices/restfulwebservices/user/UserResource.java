@@ -17,8 +17,12 @@ import java.util.List;
 @RestController
 public class UserResource {
 
-    @Autowired
+//    @Autowired
     private UserDaoService service;
+
+    public UserResource(UserDaoService service) {
+        this.service = service;
+    }
 
     @GetMapping(path = "/users")
     public List<User> retrieveAllUsers(){

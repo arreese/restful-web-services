@@ -40,3 +40,11 @@ On the Bean
 @JsonFilter("SomeBeanFilter")
 
 ```
+
+## Data Annotation (lombok)
+```
+@Data   - generates getters and setters
+@NoArgsConstructor - generates no argument constructor
+@AllArgsConstructor - generates all argument constructor
+```
+- Compiles less code

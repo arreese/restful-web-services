@@ -13,3 +13,7 @@
 
 ## Static Filtering
 - @JsonIgnore : excludes the field from the response, better in the case of renaming
+    - Configure directly on the Bean
+
+## Dynamic Filtering
+- Cannot configure directly on the Bean

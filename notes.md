@@ -19,6 +19,8 @@
 - Cannot configure filtering directly on the Bean
 - Start configuringn the filter where we are retrieving the values
 ```
+On the Controller
+
 @GetMapping("/filtering")
     public MappingJacksonValue retrieveSomeBean(){
         SomeBean someBean = new SomeBean("value1", "value2", "value3");
@@ -31,4 +33,10 @@
 
         return mapping;
     }
+```
+
+```
+On the Bean
+@JsonFilter("SomeBeanFilter")
+
 ```

@@ -10,6 +10,7 @@ import static org.mockito.Mockito.*;
 
 class UserResourceTest {
 
+    //currently not working because of the static method in CreateUser
     @Test
     void createUser() {
         UserDaoService service = mock(UserDaoService.class);

@@ -47,4 +47,4 @@ On the Bean
 @NoArgsConstructor - generates no argument constructor
 @AllArgsConstructor - generates all argument constructor
 ```
-- Compiles less code
+- Compiles less code because it gets rid of explicitly creating getters and setters

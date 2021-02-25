@@ -10,3 +10,6 @@
 - Autowire MessageSource
 - @RequestHEader(value = "Accept-Language", required = false) Locale locale
 - messageSource.getMessage("helloWorld.message", null, locale)
+
+## Static Filtering
+- @JsonIgnore : excludes the field from the response, better in the case of renaming

@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -18,10 +19,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class UserJPAResource {
 
     @Autowired
-    private UserDaoService service;
+    private UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private PostRepository postRepository;
 
     @GetMapping(path = "/jpa/users")
     public List<User> retrieveAllUsers(){
@@ -31,13 +32,13 @@ public class UserJPAResource {
 
     @GetMapping(path="/jpa/users/{id}")
     public EntityModel<User> retrieveUser(@PathVariable int id){
-        User user = service.findOne(id);
-        if(user == null){
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent()){
             throw new UserNotFoundException("id-" + id);
         }
 
         //Now we are returning user and set of links back
-        EntityModel<User> resource = EntityModel.of(user);
+        EntityModel<User> resource = EntityModel.of(user.get());
 
         WebMvcLinkBuilder linkTo =
                 linkTo(methodOn(this.getClass()).retrieveAllUsers());
@@ -52,19 +53,47 @@ public class UserJPAResource {
 
     @DeleteMapping(path="/jpa/users/{id}")
     public void deleteUser(@PathVariable int id){
-        User user = service.deleteById(id);
-        if(user == null){
-            throw new UserNotFoundException("id-" + id);
-        }
+        userRepository.deleteById(id);
     }
 
     @PostMapping("/jpa/users")
     public ResponseEntity<Object> createUser(@Valid @RequestBody User user){
-        User savedUser = service.save(user);
+        User savedUser = userRepository.save(user);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(savedUser.getId()).toUri();
+        return ResponseEntity.created(location).build();
+
+    }
+
+
+    @GetMapping(path = "/jpa/users/{id}/posts")
+    public List<Post> retrieveAllUsers(@PathVariable int id){
+
+        Optional<User> userOptional = userRepository.findById(id);
+        if(!userOptional.isPresent()){
+            throw new UserNotFoundException("id-" + id);
+        }
+
+        return userOptional.get().getPosts();
+    }
+
+    @PostMapping("/jpa/users/{id}/posts")
+    public ResponseEntity<Object> createPost(@PathVariable int id, @RequestBody Post post){
+        Optional<User> userOptional = userRepository.findById(id);
+        if(!userOptional.isPresent()){
+            throw new UserNotFoundException("id-" + id);
+        }
+
+        User user = userOptional.get();
+
+        post.setUser(user);
+        postRepository.save(post);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(post.getId()).toUri();
         return ResponseEntity.created(location).build();
 
     }

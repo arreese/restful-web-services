@@ -42,6 +42,16 @@ On the Bean
 ```
 
 ## Data Annotation (lombok)
+### Dependency
+```
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.18</version>
+    <scope>provided</scope>
+</dependency>
+```
+
 ```
 @Data   - generates getters and setters
 @NoArgsConstructor - generates no argument constructor

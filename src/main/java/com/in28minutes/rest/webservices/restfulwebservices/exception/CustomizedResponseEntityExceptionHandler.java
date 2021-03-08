@@ -17,13 +17,13 @@ import java.util.Date;
 @RestController
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
-    public final org.springframework.http.ResponseEntity<java.lang.Object> handleAllExceptions(Exception ex, org.springframework.web.context.request.WebRequest request) throws java.lang.Exception {
+    public final org.springframework.http.ResponseEntity<java.lang.Object> handleAllExceptions(Exception ex, org.springframework.web.context.request.WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public final org.springframework.http.ResponseEntity<java.lang.Object> handleUserNotFoundException(UserNotFoundException ex, org.springframework.web.context.request.WebRequest request) throws java.lang.Exception {
+    public final org.springframework.http.ResponseEntity<java.lang.Object> handleUserNotFoundException(UserNotFoundException ex, org.springframework.web.context.request.WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }

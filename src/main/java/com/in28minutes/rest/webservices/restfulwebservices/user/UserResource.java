@@ -5,7 +5,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,7 +17,7 @@ import java.util.List;
 public class UserResource {
 
 //    @Autowired
-    private UserDaoService service;
+    private final UserDaoService service;
 
     public UserResource(UserDaoService service) {
         this.service = service;
@@ -61,6 +60,7 @@ public class UserResource {
     @PostMapping("/users")
     public ResponseEntity<Object> createUser(@Valid @RequestBody User user){
         User savedUser = service.save(user);
+        System.out.println(user.getBirthDate());
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")

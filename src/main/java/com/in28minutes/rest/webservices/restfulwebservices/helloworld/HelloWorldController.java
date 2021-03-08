@@ -14,8 +14,11 @@ import java.util.Locale;
 @RestController
 public class HelloWorldController {
 
-    @Autowired
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
+
+    public HelloWorldController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     //GET
     //URI - /hello-world
